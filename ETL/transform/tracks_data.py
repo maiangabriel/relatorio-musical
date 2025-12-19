@@ -5,7 +5,8 @@ def transform_tracks(raw_tracks, genre_func):
     rows = []
 
     for t in raw_tracks:
-        if "date" not in t:
+        # Ignora música "now playing" (não tem timestamp)
+        if "@attr" in t and t["@attr"].get("nowplaying") == "true":
             continue
 
         rows.append({
