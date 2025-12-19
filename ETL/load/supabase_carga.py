@@ -1,19 +1,22 @@
-import psycopg2
+from psycopg2.extras import execute_batch
 
-def load_supabase(df, database_url):
-    conn = psycopg2.connect(database_url)
-    cur = conn.cursor()
-
+def load_supabase(df, cur):
     query = """
-        insert into daily_data
-        (run_date, track, artist, album, genre, played_at)
-        values (%s, %s, %s, %s, %s, %s)
-        on conflict do nothing
+        INSERT INTO tracks_played
+        (track, artist, album, genre, played_at)
+        VALUES (%s, %s, %s, %s, %s)
+        ON CONFLICT DO NOTHING;
     """
 
-    for _, r in df.iterrows():
-        cur.execute(query, tuple(r))
+    data = [
+        (
+            r["track"],
+            r["artist"],
+            r["album"],
+            r["genre"],
+            r["played_at"],
+        )
+        for _, r in df.iterrows()
+    ]
 
-    conn.commit()
-    cur.close()
-    conn.close()
+    execute_batch(cur, query, data, page_size=100)
