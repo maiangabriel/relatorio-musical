@@ -1,10 +1,11 @@
 import requests
 from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 
 LASTFM_URL = "https://ws.audioscrobbler.com/2.0/"
-
+TIMEZONE = ZoneInfo("America/Sao_Paulo")
 def extract_lastfm(api_key, user):
-    inicio = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+    inicio = datetime.now(TIMEZONE).replace(hour=0, minute=0, second=0, microsecond=0)
     fim = inicio + timedelta(days=1)
 
     params = {
