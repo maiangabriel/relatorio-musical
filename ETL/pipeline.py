@@ -12,8 +12,7 @@ def main():
 
     df = transform_tracks(
         raw,
-        genre_func=lambda a, t: extract_genre(
-            os.getenv("AUDIO_DB_API_KEY"), a, t
+        genre_func=lambda a, t: extract_genre( a, t
         )
     )
 
