@@ -7,7 +7,7 @@ def load_supabase(df, database_url):
 
     query = """
         INSERT INTO public.base_musicas
-        (run_date, track, artist, album, genre, played_at)
+        (track, artist, album, genre, played_at)
         VALUES (%s, %s, %s, %s, %s, %s)
         ON CONFLICT DO NOTHING
     """
