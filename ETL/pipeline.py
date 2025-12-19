@@ -1,8 +1,8 @@
 import os
-from extract.lastfm_data import extract_lastfm
-from extract.audiodb_data import extract_genre
-from transform.tracks_data import transform_tracks
-from load.supabase_carga import load_supabase
+from ETL.extract.lastfm_data import extract_lastfm
+from ETL.extract.audiodb_data import extract_genre
+from ETL.transform.tracks_data import transform_tracks
+from ETL.load.supabase_carga import load_supabase
 
 def main():
     raw = extract_lastfm(
