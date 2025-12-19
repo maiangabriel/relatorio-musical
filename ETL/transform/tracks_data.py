@@ -15,7 +15,6 @@ def transform_tracks(raw_tracks, genre_func):
 
     df = pd.DataFrame(rows)
 
-    df = df.drop_duplicates(subset=["track", "artist", "played_at"])
     df["run_date"] = datetime.now().date()
 
     return df

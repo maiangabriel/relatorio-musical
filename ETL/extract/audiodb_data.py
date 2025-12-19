@@ -1,16 +1,22 @@
 import requests
-from urllib.parse import quote
 
-def extract_genre(api_key, artist, track):
-    url = f"https://www.theaudiodb.com/api/v1/json/{api_key}/searchtrack.php"
+AUDIODB_URL = "https://www.theaudiodb.com/api/v1/json/123/searchtrack.php"
 
+def extract_genre(artist: str, track: str) -> str | None:
     params = {
-        "s": quote(artist),
-        "t": quote(track)
+        "s": artist,
+        "t": track
     }
 
-    r = requests.get(url, params=params, timeout=20)
-    if r.ok and r.json().get("track"):
-        return r.json()["track"][0].get("strGenre")
+    try:
+        r = requests.get(AUDIODB_URL, params=params, timeout=15)
+        r.raise_for_status()
+
+        data = r.json()
+        if data and data.get("track"):
+            return data["track"][0].get("strGenre")
+
+    except Exception as e:
+        print(f"⚠️ AudioDB erro ({artist} - {track}): {e}")
 
     return None
