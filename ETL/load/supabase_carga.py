@@ -1,15 +1,19 @@
 import psycopg2
+from datetime import datetime, date
 
 def load_supabase(df, database_url):
     conn = psycopg2.connect(database_url)
     cur = conn.cursor()
 
     query = """
-        insert into public.base_musicas
+        INSERT INTO public.base_musicas
         (run_date, track, artist, album, genre, played_at)
-        values (%s, %s, %s, %s, %s, %s)
-        on conflict do nothing
+        VALUES (%s, %s, %s, %s, %s, %s)
+        ON CONFLICT DO NOTHING
     """
+
+
+
     for _, r in df.iterrows():
         cur.execute(
             query,
@@ -21,6 +25,7 @@ def load_supabase(df, database_url):
                 r["played_at"],
             )
         )
+
     conn.commit()
     cur.close()
     conn.close()
