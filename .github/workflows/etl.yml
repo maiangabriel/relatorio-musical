@@ -2,7 +2,7 @@ name: RELATORIO-MUSICAL
 
 on:
   schedule:
-    - cron: "59 2 * * *"   # 23:59 Brasil (UTC-3)
+    - cron: "59 23 * * *"   # 23:59 Brasil (UTC-3)
   workflow_dispatch:
 
 jobs:
